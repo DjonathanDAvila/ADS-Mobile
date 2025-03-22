@@ -4,14 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.trabalho_final.screens.LoginScreen
+import com.example.trabalho_final.screens.RegisterUserScreen
+import com.example.trabalho_final.screens.Screens
 import com.example.trabalho_final.ui.theme.TrabalhofinalTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,25 +26,44 @@ class MainActivity : ComponentActivity() {
         setContent {
             TrabalhofinalTheme {
                 Surface() {
-
+                    MyApp()
                 }
             }
         }
     }
 }
 
+
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun MyApp() {
+    val navController = rememberNavController()
+    Scaffold {
+        Column(
+            modifier = Modifier.padding(it)
+        ) {
+            NavHost(
+                navController = navController,
+                startDestination = "LoginScreen"
+            ) {
+                composable(route = Screens.Login.route) {
+                    LoginScreen {
+                        navController.navigate(it)
+                    }
+                }
+                composable(route = Screens.RegisterUser.route) {
+                    RegisterUserScreen {
+                        navController.navigate(it)
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     TrabalhofinalTheme {
-        Greeting("Android")
+        MyApp()
     }
 }
