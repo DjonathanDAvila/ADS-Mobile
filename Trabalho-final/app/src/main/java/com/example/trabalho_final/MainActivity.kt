@@ -51,9 +51,9 @@ fun MyApp() {
                     }
                 }
                 composable(route = Screens.RegisterUser.route) {
-                    RegisterUserScreen {
-                        navController.navigate(it)
-                    }
+                    RegisterUserScreen(
+                        onNavigateTo = { navController.navigate(it) },
+                        onBack = { navController.popBackStack() })
                 }
             }
         }

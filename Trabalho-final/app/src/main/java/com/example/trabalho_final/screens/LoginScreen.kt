@@ -13,11 +13,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +25,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.trabalho_final.components.MyInputField
+import com.example.trabalho_final.components.MyPasswordField
 
 @Composable
 fun LoginScreen(
@@ -46,32 +46,29 @@ fun LoginScreen(
         ) {
             Text(text = "Login", fontWeight = FontWeight.Bold, fontSize = 32.sp)
             Spacer(modifier = Modifier.padding(6.dp))
-            Text(text = "Please sing in to continue")
+            Text(
+                text = "Please sing in to continue",
+                fontWeight = FontWeight.Medium,
+                color = Color.Gray
+            )
 
             Spacer(modifier = Modifier.padding(8.dp))
 
-            OutlinedTextField(
+
+            MyInputField(
+                label = "Email",
                 value = "",
-                label = {
-                    Text(text = "Email")
-                },
                 onValueChange = {},
-                modifier = Modifier.fillMaxWidth(),
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon")
-                }
+                icon = Icons.Default.Email,
+                contentDescription = "Email Icon"
             )
 
-            OutlinedTextField(
+            MyPasswordField(
+                label = "Password",
                 value = "",
-                label = {
-                    Text(text = "Password")
-                },
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth(),
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Lock, contentDescription = "Password Icon")
-                }
+                passwordConfirm = "",
+                confirm = false,
+                onValueChange = {}
             )
 
             Spacer(modifier = Modifier.padding(6.dp))
