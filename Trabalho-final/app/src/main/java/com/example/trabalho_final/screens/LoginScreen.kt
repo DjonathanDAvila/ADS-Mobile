@@ -78,7 +78,7 @@ fun LoginScreen(
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-                    onClick = { onNavigateTo(Screens.RegisterUser.route) }
+                    onClick = { onNavigateTo(Screens.Main.route) }
                 ) {
                     Text(text = "Login")
                     Spacer(modifier = Modifier.width(8.dp))

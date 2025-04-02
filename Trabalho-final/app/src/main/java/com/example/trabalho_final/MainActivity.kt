@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.trabalho_final.screens.LoginScreen
+import com.example.trabalho_final.screens.MainScreen
 import com.example.trabalho_final.screens.RegisterUserScreen
 import com.example.trabalho_final.screens.Screens
 import com.example.trabalho_final.ui.theme.TrabalhofinalTheme
@@ -52,6 +53,11 @@ fun MyApp() {
                 }
                 composable(route = Screens.RegisterUser.route) {
                     RegisterUserScreen(
+                        onNavigateTo = { navController.navigate(it) },
+                        onBack = { navController.popBackStack() })
+                }
+                composable(route = Screens.Main.route) {
+                    MainScreen(
                         onNavigateTo = { navController.navigate(it) },
                         onBack = { navController.popBackStack() })
                 }
