@@ -1,4 +1,4 @@
-package com.example.trabalho_final.screens
+package com.example.trabalho_final.screens.login
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,20 +18,30 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.trabalho_final.components.MyInputField
 import com.example.trabalho_final.components.MyPasswordField
+import com.example.trabalho_final.database.AppDataBase
+import com.example.trabalho_final.screens.Screens
 
 @Composable
 fun LoginScreen(
     onNavigateTo: (String) -> Unit
 ) {
+    val ctx = LocalContext.current
+    val userDao = AppDataBase.getDatabase(ctx).userDao()
+    val loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory(userDao))
+    val loginState = loginViewModel.uiState.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -57,18 +67,22 @@ fun LoginScreen(
 
             MyInputField(
                 label = "Email",
-                value = "",
-                onValueChange = {},
+                value = loginState.value.email,
+                onValueChange = {
+                    loginViewModel.onEmailChange(it)
+                },
                 icon = Icons.Default.Email,
                 contentDescription = "Email Icon"
             )
 
             MyPasswordField(
                 label = "Password",
-                value = "",
+                value = loginState.value.password,
                 passwordConfirm = "",
                 confirm = false,
-                onValueChange = {}
+                onValueChange = {
+                    loginViewModel.onPasswordChange(it)
+                }
             )
 
             Spacer(modifier = Modifier.padding(6.dp))
@@ -78,7 +92,11 @@ fun LoginScreen(
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-                    onClick = { onNavigateTo(Screens.Main.route) }
+                    onClick = {
+                        loginViewModel.login(ctx) {
+                            onNavigateTo(Screens.Main.route)
+                        }
+                    }
                 ) {
                     Text(text = "Login")
                     Spacer(modifier = Modifier.width(8.dp))
