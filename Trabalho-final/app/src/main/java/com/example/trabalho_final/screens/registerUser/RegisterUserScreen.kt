@@ -1,4 +1,4 @@
-package com.example.trabalho_final.screens
+package com.example.trabalho_final.screens.registerUser
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
@@ -38,8 +38,7 @@ import com.example.trabalho_final.components.ErrorDialog
 import com.example.trabalho_final.components.MyInputField
 import com.example.trabalho_final.components.MyPasswordField
 import com.example.trabalho_final.database.AppDataBase
-import com.example.trabalho_final.viewmodel.RegisterUserViewModel
-import com.example.trabalho_final.viewmodel.RegisterUserViewModelFactory
+import com.example.trabalho_final.screens.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -161,6 +160,7 @@ fun RegisterUserScreen(
                                 Toast.LENGTH_SHORT
                             ).show()
                             registerUserViewModel.cleanDisplayValues()
+                            onNavigateTo(Screens.Login.route)
                         }
                     }
                 }

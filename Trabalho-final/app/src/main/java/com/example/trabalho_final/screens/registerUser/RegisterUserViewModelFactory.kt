@@ -1,4 +1,4 @@
-package com.example.trabalho_final.viewmodel
+package com.example.trabalho_final.screens.registerUser
 
 import androidx.lifecycle.ViewModel
 import com.example.trabalho_final.dao.UserDao

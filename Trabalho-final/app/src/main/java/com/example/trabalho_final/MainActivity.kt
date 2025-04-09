@@ -14,9 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.trabalho_final.screens.LoginScreen
+import com.example.trabalho_final.screens.login.LoginScreen
 import com.example.trabalho_final.screens.MainScreen
-import com.example.trabalho_final.screens.RegisterUserScreen
+import com.example.trabalho_final.screens.registerUser.RegisterUserScreen
 import com.example.trabalho_final.screens.Screens
 import com.example.trabalho_final.ui.theme.TrabalhofinalTheme
 

@@ -28,4 +28,10 @@ interface UserDao {
 
     @Query("select * from user u order by u.fullName")
     suspend fun findAll(): List<User>
+
+    @Query("SELECT * FROM user WHERE email = :email LIMIT 1")
+    suspend fun getUserByEmail(email: String): User?
+
+    @Query("SELECT * FROM user WHERE email = :email AND password = :password LIMIT 1")
+    suspend fun getUserByEmailAndPassword(email: String, password: String): User?
 }
