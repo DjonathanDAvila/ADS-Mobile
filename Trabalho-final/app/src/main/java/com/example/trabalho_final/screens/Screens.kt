@@ -6,5 +6,6 @@ enum class Screens(val route: String) {
     Main("MainScreen"),
     Home("HomeScreen"),
     Travel("TravelScreen"),
-    About("AboutScreen")
+    About("AboutScreen"),
+    NewTravel("NewTravelScreen")
 }
