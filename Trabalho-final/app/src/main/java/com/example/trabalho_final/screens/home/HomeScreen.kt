@@ -88,29 +88,6 @@ fun HomeScreen(
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
 fun PreviewHomeScreen() {
-    val fakeTravels = listOf(
-        Travel(
-            id = 1,
-            destination = "Paris",
-            type = "Lazer",
-            startDate = System.currentTimeMillis(),
-            endDate = System.currentTimeMillis() + 3 * 24 * 60 * 60 * 1000,
-            budget = 5000.0
-        ),
-        Travel(
-            id = 2,
-            destination = "São Paulo",
-            type = "Negócio",
-            startDate = System.currentTimeMillis() + 5 * 24 * 60 * 60 * 1000,
-            endDate = System.currentTimeMillis() + 8 * 24 * 60 * 60 * 1000,
-            budget = 2000.0
-        )
-    )
-
-    /*val fakeViewModel = object : HomeViewModel(dao = FakeTravelDao()) {
-        override val travels = MutableStateFlow(fakeTravels)
-    }*/
-
     MaterialTheme {
         HomeScreen(
             onEditTravel = {},

@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.trabalho_final.database.AppDataBase
+import com.example.trabalho_final.entity.enums.TravelType
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -107,14 +108,14 @@ fun NewTravelScreen(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             RadioButton(
-                selected = state.type == "Negócio",
-                onClick = { viewModel.onTipoChange("Negócio") }
+                selected = state.type == TravelType.NEGOCIO,
+                onClick = { viewModel.onTipoChange(TravelType.NEGOCIO) }
             )
             Text("Negócio")
             Spacer(modifier = Modifier.width(16.dp))
             RadioButton(
-                selected = state.type == "Lazer",
-                onClick = { viewModel.onTipoChange("Lazer") }
+                selected = state.type == TravelType.LAZER,
+                onClick = { viewModel.onTipoChange(TravelType.LAZER) }
             )
             Text("Lazer")
         }

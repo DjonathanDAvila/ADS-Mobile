@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trabalho_final.dao.TravelDao
 import com.example.trabalho_final.entity.Travel
+import com.example.trabalho_final.entity.enums.TravelType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 data class NewTravelUiState(
     val id: Int = 0,
     val destination: String = "",
-    val type: String = "Lazer",
+    val type: TravelType = TravelType.LAZER,
     val startDate: Long = System.currentTimeMillis(),
     val endDate: Long = System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000,
     val budget: String = "",
@@ -29,9 +30,10 @@ class NewTravelViewModel(private val travelDao: TravelDao) : ViewModel() {
         _uiState.value = _uiState.value.copy(destination = value)
     }
 
-    fun onTipoChange(value: String) {
+    fun onTipoChange(value: TravelType) {
         _uiState.value = _uiState.value.copy(type = value)
     }
+
 
     fun onDataInicioChange(timestamp: Long) {
         val dataFim = _uiState.value.endDate

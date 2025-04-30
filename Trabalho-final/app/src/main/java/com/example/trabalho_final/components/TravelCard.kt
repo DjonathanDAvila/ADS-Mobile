@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.trabalho_final.entity.Travel
+import com.example.trabalho_final.entity.enums.TravelType
+import com.example.trabalho_final.entity.enums.toDisplayName
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -30,7 +32,11 @@ fun TravelCard(
     onLongClick: () -> Unit
 ) {
     val formatter = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
-    val icon = if (travel.type == "Negócio") Icons.Default.Work else Icons.Default.BeachAccess
+
+    val icon = when (travel.type) {
+        TravelType.NEGOCIO -> Icons.Default.Work
+        TravelType.LAZER -> Icons.Default.BeachAccess
+    }
 
     Card(
         modifier = Modifier
@@ -43,7 +49,7 @@ fun TravelCard(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(icon, contentDescription = travel.type, modifier = Modifier.size(32.dp))
+            Icon(icon, contentDescription = travel.type.toDisplayName(), modifier = Modifier.size(32.dp))
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(text = travel.destination, style = MaterialTheme.typography.titleMedium)
@@ -53,6 +59,10 @@ fun TravelCard(
                 )
                 Text(
                     text = "R$ ${travel.budget}",
+                    style = MaterialTheme.typography.bodySmall
+                )
+                Text( // você pode adicionar essa linha, se quiser mostrar o tipo da viagem
+                    text = travel.type.toDisplayName(),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
