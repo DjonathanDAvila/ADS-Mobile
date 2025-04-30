@@ -11,13 +11,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 data class NewTravelUiState(
     val id: Int = 0,
     val destination: String = "",
     val type: TravelType = TravelType.LAZER,
-    val startDate: Long = System.currentTimeMillis(),
-    val endDate: Long = System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000,
+    val startDate: LocalDateTime = LocalDateTime.now(),
+    val endDate: LocalDateTime = LocalDateTime.now().plusDays(2),
     val budget: String = "",
     val showSuccessDialog: Boolean = false
 )
@@ -37,17 +39,19 @@ class NewTravelViewModel(private val travelDao: TravelDao) : ViewModel() {
 
     fun onDataInicioChange(timestamp: Long) {
         val dataFim = _uiState.value.endDate
-        val minFim = timestamp + 2 * 24 * 60 * 60 * 1000
-        val novoFim = if (dataFim < minFim) minFim else dataFim
+        val minFim = LocalDateTime.ofEpochSecond(timestamp / 1000, 0, ZoneOffset.UTC).plusDays(2)
+        val novoFim = if (dataFim.isBefore(minFim)) minFim else dataFim
 
         _uiState.value = _uiState.value.copy(
-            startDate = timestamp,
+            startDate = LocalDateTime.ofEpochSecond(timestamp / 1000, 0, ZoneOffset.UTC),
             endDate = novoFim
         )
     }
 
     fun onDataFimChange(timestamp: Long) {
-        _uiState.value = _uiState.value.copy(endDate = timestamp)
+        _uiState.value = _uiState.value.copy(
+            endDate = LocalDateTime.ofEpochSecond(timestamp / 1000, 0, ZoneOffset.UTC)
+        )
     }
 
     fun onOrcamentoChange(value: String) {

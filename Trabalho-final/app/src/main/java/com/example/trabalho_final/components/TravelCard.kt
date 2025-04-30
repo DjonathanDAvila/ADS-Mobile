@@ -2,7 +2,13 @@ package com.example.trabalho_final.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BeachAccess
 import androidx.compose.material.icons.filled.Work
@@ -19,9 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.example.trabalho_final.entity.Travel
 import com.example.trabalho_final.entity.enums.TravelType
 import com.example.trabalho_final.entity.enums.toDisplayName
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.time.format.DateTimeFormatter
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -31,7 +35,7 @@ fun TravelCard(
     onClick: () -> Unit,
     onLongClick: () -> Unit
 ) {
-    val formatter = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
+    val formatter = remember { DateTimeFormatter.ofPattern("dd/MM/yyyy") }
 
     val icon = when (travel.type) {
         TravelType.NEGOCIO -> Icons.Default.Work
@@ -54,14 +58,14 @@ fun TravelCard(
             Column {
                 Text(text = travel.destination, style = MaterialTheme.typography.titleMedium)
                 Text(
-                    text = "De ${formatter.format(Date(travel.startDate))} até ${formatter.format(Date(travel.endDate))}",
+                    text = "De ${travel.startDate.format(formatter)} até ${travel.endDate.format(formatter)}",
                     style = MaterialTheme.typography.bodySmall
                 )
                 Text(
                     text = "R$ ${travel.budget}",
                     style = MaterialTheme.typography.bodySmall
                 )
-                Text( // você pode adicionar essa linha, se quiser mostrar o tipo da viagem
+                Text(
                     text = travel.type.toDisplayName(),
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -69,3 +73,4 @@ fun TravelCard(
         }
     }
 }
+

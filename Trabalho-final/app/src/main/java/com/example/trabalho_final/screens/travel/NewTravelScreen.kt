@@ -34,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.trabalho_final.database.AppDataBase
 import com.example.trabalho_final.entity.enums.TravelType
 import java.text.SimpleDateFormat
+import java.time.ZoneOffset
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -124,15 +125,23 @@ fun NewTravelScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
+                    val startDateMillis =
+                        state.startDate.atZone(ZoneOffset.systemDefault()).toInstant()
+                            .toEpochMilli()
                     showDatePicker(
-                        state.startDate,
+                        startDateMillis,
                         System.currentTimeMillis(),
                         viewModel::onDataInicioChange
                     )
                 }
         ) {
             OutlinedTextField(
-                value = formatter.format(Date(state.startDate)),
+                value = formatter.format(
+                    Date(
+                        state.startDate.atZone(ZoneOffset.systemDefault()).toInstant()
+                            .toEpochMilli()
+                    )
+                ),
                 onValueChange = {},
                 label = { Text("Data de Início") },
                 readOnly = true,
@@ -142,7 +151,10 @@ fun NewTravelScreen(
 
 
         val minEndDate = Calendar.getInstance().apply {
-            timeInMillis = state.startDate
+            val startDateMillis =
+                state.startDate.atZone(ZoneOffset.systemDefault()).toInstant()
+                    .toEpochMilli()
+            timeInMillis = startDateMillis
             add(Calendar.DAY_OF_MONTH, 2)
         }.timeInMillis
 
@@ -150,11 +162,14 @@ fun NewTravelScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    showDatePicker(state.endDate, minEndDate, viewModel::onDataFimChange)
+                    val startDateMillis =
+                        state.startDate.atZone(ZoneOffset.systemDefault()).toInstant()
+                            .toEpochMilli()
+                    showDatePicker(startDateMillis, minEndDate, viewModel::onDataFimChange)
                 }
         ) {
             OutlinedTextField(
-                value = formatter.format(Date(state.endDate)),
+                value = formatter.format(Date(state.endDate.atZone(ZoneOffset.systemDefault()).toInstant().toEpochMilli())),
                 onValueChange = {},
                 label = { Text("Data de Fim") },
                 readOnly = true,
