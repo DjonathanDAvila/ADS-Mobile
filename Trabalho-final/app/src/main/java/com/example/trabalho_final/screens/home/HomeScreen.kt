@@ -31,7 +31,8 @@ import com.example.trabalho_final.entity.Travel
 @Composable
 fun HomeScreen(
     onEditTravel: (Int) -> Unit,
-    travelDao: TravelDao
+    travelDao: TravelDao,
+    onViewSuggestion: (Int, String) -> Unit
 ) {
     val viewModel: HomeViewModel = viewModel(
         factory = HomeViewModelFactory(travelDao)
@@ -55,7 +56,10 @@ fun HomeScreen(
                 TravelCard(
                     travel = travel,
                     onClick = { onEditTravel(travel.id) },
-                    onLongClick = { travelToDelete = travel }
+                    onLongClick = { travelToDelete = travel },
+                    onSuggestionClick = {
+                        onViewSuggestion(travel.id, travel.destination)
+                    }
                 )
             }
         }
@@ -91,7 +95,8 @@ fun PreviewHomeScreen() {
     MaterialTheme {
         HomeScreen(
             onEditTravel = {},
-            travelDao = TODO() // só pra satisfazer o parâmetro, não será usado
+            travelDao = TODO(),
+            onViewSuggestion = TODO() // só pra satisfazer o parâmetro, não será usado
         )
     }
 }

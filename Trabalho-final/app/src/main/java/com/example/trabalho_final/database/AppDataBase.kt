@@ -7,16 +7,19 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.trabalho_final.dao.SuggestionDAO
 import com.example.trabalho_final.dao.TravelDao
 import com.example.trabalho_final.dao.UserDao
+import com.example.trabalho_final.entity.Suggestion
 import com.example.trabalho_final.entity.Travel
 import com.example.trabalho_final.entity.User
 
-@Database(entities = [User::class, Travel::class], version = 3, exportSchema = false)
+@Database(entities = [User::class, Travel::class, Suggestion::class], version = 4, exportSchema = false)
 @TypeConverters(DataBaseTypeConverter::class)
 abstract class AppDataBase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun travelDao(): TravelDao
+    abstract fun suggestionDao(): SuggestionDAO
 
     companion object {
         @Volatile

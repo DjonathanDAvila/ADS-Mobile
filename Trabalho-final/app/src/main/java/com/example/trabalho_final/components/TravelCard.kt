@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BeachAccess
+import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +35,8 @@ import java.time.format.DateTimeFormatter
 fun TravelCard(
     travel: Travel,
     onClick: () -> Unit,
-    onLongClick: () -> Unit
+    onLongClick: () -> Unit,
+    onSuggestionClick: () -> Unit
 ) {
     val formatter = remember { DateTimeFormatter.ofPattern("dd/MM/yyyy") }
 
@@ -69,6 +72,10 @@ fun TravelCard(
                     text = travel.type.toDisplayName(),
                     style = MaterialTheme.typography.bodySmall
                 )
+            }
+
+            IconButton(onClick = onSuggestionClick) {
+                Icon(Icons.Default.Map, contentDescription = "Ver roteiro")
             }
         }
     }

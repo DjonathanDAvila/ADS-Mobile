@@ -44,6 +44,7 @@ dependencies {
     val nav_version = "2.8.9"
     val ComposeMaterial = "1.7.8"
 
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)

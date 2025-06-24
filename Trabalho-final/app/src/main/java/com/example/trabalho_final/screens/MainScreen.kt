@@ -30,6 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.trabalho_final.database.AppDataBase
+import com.example.trabalho_final.screens.Suggestion.SuggestionScreen
 import com.example.trabalho_final.screens.home.HomeScreen
 import com.example.trabalho_final.screens.travel.NewTravelScreen
 
@@ -42,6 +43,7 @@ fun MainScreen(
     val context = LocalContext.current
     val db = AppDataBase.getDatabase(context)
     val travelDao = db.travelDao()
+    val suggestionDao = db.suggestionDao()
     val navController = rememberNavController()
     Scaffold(
         topBar = {
@@ -105,7 +107,10 @@ fun MainScreen(
                         onEditTravel = { id ->
                             navController.navigate("${Screens.NewTravel.route}?id=$id")
                         },
-                        travelDao = travelDao
+                        travelDao = travelDao,
+                        onViewSuggestion = { travelId, destination ->
+                            navController.navigate("suggestion/$travelId/$destination")
+                        }
                     )
                 }
                 composable(
@@ -129,6 +134,18 @@ fun MainScreen(
 
                 composable(Screens.About.route) {
                     AboutScreen()
+                }
+
+                composable("suggestion/{travelId}/{destination}") { backStackEntry ->
+                    val travelId = backStackEntry.arguments?.getString("travelId")?.toIntOrNull() ?: return@composable
+                    val destination = backStackEntry.arguments?.getString("destination") ?: return@composable
+
+                    SuggestionScreen(
+                        travelId = travelId,
+                        travelDao = travelDao,
+                        suggestionDao = suggestionDao,
+                        onBack = { navController.popBackStack() }
+                    )
                 }
             }
         }
